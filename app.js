@@ -2,7 +2,8 @@ var express = require('express');
 var path = require('path');
 
 var ws = require('websocket.io')
-    , server = ws.listen(3001)
+    , http = require('http').createServer().listen(3000)
+    , server = ws.attach(http)
 var clients = []
 
 server.on('connection', function (socket) {
