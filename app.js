@@ -1,10 +1,11 @@
 var express = require('express');
 var http = require('http');
 var app = express();
-var port = process.env.PORT || 8000;
-console.log(port)
-var server = http.createServer(app).listen(port)
+app.set('port', (process.env.PORT || 5000));
+console.log(app.get('port'))
+var server = http.createServer(app)
 var io = require('socket.io').listen(server);
+server.listen(process.env.PORT || 5000);
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
