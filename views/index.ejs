@@ -1,11 +1,53 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel="/javascripts/widget.html"></link>
+</head>
+<body style="height: 100%">
+<div id="widget-container" style="height: 100%"></div>
+<!--<input type="text" id="text">-->
+<!--<button onclick="send()">Sync</button>-->
+<script src="/socket.io/socket.io.js"></script>
+<!--<script src="/javascripts/widget.js"></script>-->
+<script src="/javascripts/canvas-designer-widget.js"></script>
+<!-- 2nd step -->
+<script>
+    var designer = new CanvasDesigner();
+    // both links are mandatory
+    // widget.html will internally use widget.js
+    designer.widgetHtmlURL = '/javascripts/widget.html'; // you can place this file anywhere
+    designer.widgetJsURL = '/javascripts/widget.js';     // you can place this file anywhere
+    <!-- 3rd i.e. last step -->
+    // <iframe> will be appended to "document.body"
+    //        designer.appendTo(document.body || document.documentElement);
+    //        if (!designer.iframe) {
+    //            designer.appendTo(document.body);
+    //        }
+    designer.appendTo(document.getElementById('widget-container'));
+    if (!designer.iframe) {
+        designer.appendTo(document.body);
+    }
+    designer.iframe.style.height = '100%'
+    designer.addSyncListener(function (data) {
+        console.log("syncing");
+        socket.emit('syncCanvas', data);
+    });
+</script>
+
+<script>
+    var socket = io();
+    socket.on('testBroadcast', function (data) {
+        alert(data);
+    })
+    socket.on('syncCanvas', function (data) {
+        designer.syncData(data);
+    });
+    function send() {
+        socket.emit('syncCanvas', designer.data.canvasDesignerSyncData);
+    }
+</script>
+</body>
 </html>
