@@ -35,19 +35,12 @@
         console.log("syncing");
         socket.emit('syncCanvas', data);
     });
-</script>
 
-<script>
     var socket = io();
-    socket.on('testBroadcast', function (data) {
-        alert(data);
-    })
     socket.on('syncCanvas', function (data) {
         designer.syncData(data);
     });
-    function send() {
-        socket.emit('syncCanvas', designer.data.canvasDesignerSyncData);
-    }
+    designer.onload = function(){socket.emit('initCanvas')}
 </script>
 </body>
 </html>

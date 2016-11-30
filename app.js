@@ -1,11 +1,10 @@
 var express = require('express');
 var http = require('http');
 var app = express();
-app.set('port', (process.env.PORT || 5000));
-console.log(app.get('port'))
+app.set('port', (process.env.PORT || 80));
 var server = http.createServer(app)
 var io = require('socket.io').listen(server);
-server.listen(process.env.PORT || 5000);
+server.listen(process.env.PORT || 80);
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -13,7 +12,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var test = require('./routes/test');
+//var socket = require('./socket.js');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,7 +28,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/test', test);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -49,6 +49,7 @@ app.use(function (err, req, res, next) {
 });
 module.exports = app;
 
+var sesionData
 var clients = []
 io.on('connection', function (socket) {
     console.log("client connected");
@@ -56,22 +57,23 @@ io.on('connection', function (socket) {
     socket.on('disconnect', function(){
         console.log('user disconnected');
     });
-    socket.on('testField', function (data) {
-        console.log(data);
-        clients.forEach(function (client) {
-            console.log('sending : ' + data + ' to: ' + socket.ip);
-            client.emit('testBroadcast', data);
-        })
-    });
+    socket.on('initCanvas', function () {
+        if(sesionData == undefined) return;
+        console.log('init' + sesionData.valueOf())
+        socket.emit('syncCanvas', sesionData);
+    })
     socket.on('close', function () {
         console.log("conn closed");
     });
     socket.on('syncCanvas', function (data) {
         console.log("syncin canvas");
+        sesionData = data;
         clients.forEach(function (client) {
             console.log('sending : ' + data + ' to: ' + socket.conn.remoteAddress);
-            client.emit('syncCanvas', data);
+            client.emit('syncCanvas', sesionData);
         })
     });
 });
-console.log("initialized");
+
+
+
