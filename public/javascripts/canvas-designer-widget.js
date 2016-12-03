@@ -42,7 +42,7 @@ function CanvasDesigner() {
     var dataURLListener = function(dataURL) {};
 
     function onMessage(event) {
-        // if (!event.data || event.data.uid !== designer.uid) return;
+        //if (!event.data || event.data.uid !== designer.uid) return;
         if (!event.data) return;
 
         if (!!event.data.canvasDesignerSyncData) {

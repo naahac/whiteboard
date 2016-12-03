@@ -6,20 +6,21 @@ var server = http.createServer(app)
 var io = require('socket.io').listen(server);
 server.listen(process.env.PORT || 80);
 var path = require('path');
+
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var test = require('./routes/test');
-//var socket = require('./socket.js');
+var canvas = require('./routes/canvas');
+var database = require('./database/database');
+// var socket = require('./socket');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -28,7 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/test', test);
+app.use('/canvas', canvas);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -47,33 +48,52 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
-module.exports = app;
 
-var sesionData
 var clients = []
 io.on('connection', function (socket) {
     console.log("client connected");
     clients.push(socket);
     socket.on('disconnect', function(){
-        console.log('user disconnected');
+        database.removeSocket(socket.id);
+        console.log('user disconnected' + socket.id);
     });
-    socket.on('initCanvas', function () {
-        if(sesionData == undefined) return;
-        console.log('init' + sesionData.valueOf())
-        socket.emit('syncCanvas', sesionData);
-    })
     socket.on('close', function () {
         console.log("conn closed");
     });
-    socket.on('syncCanvas', function (data) {
+    socket.on('addSocketToCanvas', function (canvasId) {
+        console.log("addSocketToCanvas");
+        database.addSocketToCanvas(canvasId, socket.id)
+        database.getCanvas(canvasId, function (data) {
+            console.log('init canvas data');
+            //data[0].canvasData.startIndex = 0
+            if(data.length > 0){
+                console.log(data[0].canvasData);
+                socket.emit('syncCanvas', data[0].canvasData);
+            }
+        });
+    });
+
+    socket.on('syncCanvas', function (canvasId, data) {
         console.log("syncin canvas");
-        sesionData = data;
-        clients.forEach(function (client) {
-            console.log('sending : ' + data + ' to: ' + socket.conn.remoteAddress);
-            client.emit('syncCanvas', sesionData);
+        database.updateCanvas(canvasId, data, function (rows) {
+            console.log(rows);
+            database.getClientsByCanvasId(canvasId, function (canvasClients) {
+                // database.getCanvas(canvasId, function (data) {
+                    clients.forEach(function (client) {
+                        canvasClients.forEach(function (curr) {
+                            if(curr.clientId == client.id){
+                                console.log('sending : ' + JSON.stringify(data) + '\n to: ' + socket.conn.remoteAddress);
+                                client.emit('syncCanvas', data);
+                            }
+                        });
+                    })
+                // });
+            });
         })
     });
 });
 
-
-
+module.exports = {
+    app: app,
+    io: io
+};
