@@ -7,16 +7,18 @@
     <link rel="/javascripts/widget.html"></link>
 </head>
 <body style="height: 100%">
-<!--<input type="button" onclick="Export()" value="Export" />-->
+<input type="button" onclick="Export()" value="Export" />
 <div id="widget-container" style="height: 90%"></div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/javascripts/canvas-designer-widget.js"></script>
+<script src="/javascripts/download.js"></script>
 <script>
     function Export(){
-        alert('onclick');
         designer.toDataURL('image/png', function(dataURL) {
-            socket.emit('uploadPicture', getParameterByName('canvasId'), dataURL);
-            socket.emit('getPicture', getParameterByName('canvasId'));
+            //download(dataURL,'image.png', 'image/png');
+            window.open(dataURL);
+//            socket.emit('uploadPicture', getParameterByName('canvasId'), dataURL);
+//            socket.emit('getPicture', getParameterByName('canvasId'));
         });
     }
     function getParameterByName(name, url) {

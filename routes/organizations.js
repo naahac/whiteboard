@@ -8,7 +8,11 @@ router.get('/', function(req, res, next) {
     t.get("/1/members/me/organizations", function(err, data) {
         if (err) console.log(err);
         console.log(data);
-        res.render('organizations', { title: 'Express', username : 'Neke',teams : data});
+        t.get("/1/members/me", function(err, me) {
+            if (err) console.log(err);
+            console.log(me);
+            res.render('organizations', { title: 'Express', username : me.username,teams : data});
+        });
     });
 });
 module.exports = router;

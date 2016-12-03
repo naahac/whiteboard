@@ -8,8 +8,6 @@ database.connect();
 
 router.get('/*', function(req, res, next) {
     var boardId = req.query.boardId;
-    //var canvasId = req.query.canvasId;
-    //database.insertBoard(boardId);
     database.addCanvasToBoard(boardId, '', function (rows) {
         res.render('canvas', { title: 'Canvas', random: 'Random data' });
     });
