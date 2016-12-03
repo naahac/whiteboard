@@ -24,13 +24,13 @@
             <li><a href="collapsible.html">JavaScript</a></li>
         </ul>
         <div class="row" style="height:100%; margin-bottom:0;">
-            <div class="col s4 m4" style="line-height: 48px;"><img class="brand-logo" src="images/logo.png"
+            <div class="col s4 m4" style="line-height: 48px;"><img class="brand-logo" src="images/brainstorm.png"
                                                                    style="height:40px; padding-top:10px;"></div>
             <div id="nav-mobile" class="col s4 m4 right hide-on-med-and-down" style="height:100%; line-height:100%;">
                 <ul class="tabs">
-                    <li class="tab col s3"><a id="text_hover" href="#test1">Test 1</a></li>
-                    <li class="tab col s3"><a id="text_hover" class="active" href="#test2">Test 2</a></li>
-                    <li class="tab col s3"><a id="text_hover" href="#test4">Test 4</a></li>
+                    <li class="tab col s3"><a id="text_hover" href="#wubbalubba"><i style="padding-bottom:30px;" class="material-icons">collections</i></a></li>
+                    <li class="tab col s3"><a id="text_hover" class="active" href="#wubbalubba"> <i class="material-icons big center">color_lens</i> </a></li>
+                    <li class="tab col s3"><a id="text_hover disconnect" href="#wubbalubba"><i class="material-icons big center">person</i> </a></li>
                 </ul>
             </div>
         </div>
@@ -40,14 +40,7 @@
 <div class="main">
 
     <div class="container index_center">
-        <table>
-        <% for(var i=0; i < teams.length; i++) { %>
-        <tr>
-            <td><%= teams[i].id %></td>
-            <td><%= teams[i].name %></td>
-        </tr>
-        <% } %>
-        </table>
+
         <div class="row">
             <div id="welcome_text" class="col s12 m12" style="padding-top:60px; text-align:center;">
                 <h3> wubba lubba dubb dubb </h3>
@@ -66,33 +59,128 @@
 //            }
         </script>
 
-        <div id="loggedin">
-            <div id="header">
-                Logged in to as <span id="fullName"></span>
+        <div id="loggedin" style="background:white;">
+            <div id="header" style="background:white;">
                 <a id="disconnect" href="#">Log Out</a>
             </div>
         </div>
 
-            <!--<label> teams: </label>-->
-            <!--<div id="outputTeams"></div>-->
-
-            <!--&lt;!&ndash;label>Moj seznam tabel (projektov)</label>-->
-            <!--<div id="output"></div>-->
-
-             <!--<label>Listi na izbrani tabeli</label>-->
-            <!--<div id="outputLists" ></div>-->
 
 
-            <!--<label>Karte na izbrani tabeli</label>-->
-            <!--<div id="outputCards"></div> &ndash;&gt;-->
+
+        <div class="row" id="sekcija_stanovanja" >
+
+            <% for(var i=0; i < teams.length; i++) { %>
+
+            <div class="col m6 s6" >
+
+                <div  id="card_hover"  class="card sticky-action medium hoverable" style="padding: 10px; overflow-y: hidden;">
+
+                    <div class="card-image waves-effect waves-block waves-light crop_image activator  portfolio-item"
+                         style="width:100%;height: 100%; background-image:url(images/brainstorming_2.jpg);">
+
+                        <div class="content" style="padding: 30px;">
+
+                            <% for(var j=0; j < teams[i].idBoards.length; j++) {
+                            %>
+
+                            <div class="col s6 m6 center" style="padding: 20px; font-size:14px; line-height:1;" > <i class="material-icons big center">gesture</i> <a href="/canvas?boardId=<%= teams[i].idBoards[j] %>"> board </a> </div>
+
+                            <% } %>
+                        </div>
+
+                    </div>
 
 
-            <!--&lt;!&ndash;  https://api.trello.com/1/members/57fb57ac2b4ee3c613f68f27/organizations?-->
-            <!--key=03302260cf80ddc31e5a5d3f9d8ea0e5&token=4206467f056cb6a4a0a17e79e649e49c013266b098297b6ec3a919f728299479  &ndash;&gt;-->
+                    <ul class="card-action-buttons" >
 
-        <!--</div>-->
+                        <li style="margin-top:10px;"><a class="btn-floating waves-effect waves-light" href="<%=teams[i].url %>" style="background-color:#FB9494"><i style="color:white;" class="material-icons small">link</i></a>
+                        </li>
+                    </ul>
+
+
+
+
+                    <div class="card-content center" style=" padding: 5px; padding-top:15px; position:relative;">
+                        <div class="col m12 s12 card-title grey-text text-darken-4 " style="line-height:25px;"  > <%= teams[i].displayName %>
+                            <!--a style="padding-left:20px;" href="<%=teams[i].url %>">  <i class="material-icons">link</i> </a-->
+                        </div>
+                        <!--div class="col m12 s12 " > <p style="font-size:12px;"> Maribor <i class="material-icons tiny center"
+                                                                                           style=" vertical-align:bottom;vertical-align: text-bottom;">home</i> </p> </div-->
+
+
+                        <div class="col s12 m12" style="padding-top: 15px; font-size:12px; line-height:1;">
+
+                            <% for(var k=0; k < teams[i].memberships.length; k++) {
+                            %>
+                                <div class="col s6 m4" > <i class="material-icons">person_pin</i> <p> <%=teams[i].memberships[k].memberType %></p> </div>
+
+
+                            <% } %>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <% } %>
+
+
+
+
+        </div>
+
+
+
+
+        <div class="fixed-action-btn horizontal" style="bottom: 60px;"> <!-- position: absolute -->  <!-- brez teh dveh je fiksirano na celotno stran -->
+
+            <a class="btn-floating btn-large green"  id="disconnect" onclick="">
+                <i class="large material-icons" style="background-color:#FB9494">mode_edit</i>
+            </a>
+            <ul>
+                <li><a class="btn-floating red"  id="disconnect"  style="transform: scaleY(0.4) scaleX(0.4) translateY(0px) translateX(40px); opacity: 0;"><i class="material-icons" style="background-color:#FB9494">collections</i></a></li>
+                <li><a class="btn-floating yellow darken-1"   id="disconnect"  style="transform: scaleY(0.4) scaleX(0.4) translateY(0px) translateX(40px); opacity: 0;"><i class="material-icons" style="background-color:#FB9494">color_lens</i></a></li>
+                <li><a class="btn-floating green"  id="disconnect"  style="transform: scaleY(0.4) scaleX(0.4) translateY(0px) translateX(40px); opacity: 0;"><i class="material-icons" style="background-color:#FB9494">person</i></a></li>
+            </ul>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 <footer class="page-footer" style="margin-top:0;">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -104,7 +192,7 @@
     <div class="container">
         <div class="row">
             <div class="col l6 s12">
-                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer
+                <p class="grey-text text-lighten-4">Icon made by freepik from www.flaticon.com
                     content.</p>
             </div>
         </div>
@@ -112,7 +200,6 @@
     <div class="footer-copyright">
         <div class="container">
             © 2014 Copyright Text
-            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
         </div>
     </div>
 </footer>
