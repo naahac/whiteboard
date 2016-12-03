@@ -16,6 +16,8 @@ var index = require('./routes/index');
 var canvas = require('./routes/canvas');
 var database = require('./database/database');
 // var socket = require('./socket');
+var team = require('./routes/team');
+//var socket = require('./socket.js');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,6 +32,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/canvas', canvas);
+app.use('/team', team);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
