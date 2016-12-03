@@ -1,8 +1,575 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    font-family: arial;
+    font-size: 12px;
 }
 
-a {
-  color: #00B7FF;
+#loggedout {
+    text-align: center;
+    font-size: 20px;
+    padding-top: 30px;
 }
+#loggedin { 
+    display: none; 
+}
+
+#header {
+    padding: 4px;
+    border-bottom: 1px solid #000;
+    background: #eee;
+}
+
+#output {
+    padding: 4px;
+}
+
+.card { 
+    display: block; 
+    padding: 2px;
+}
+
+
+
+/*sticky footer*/
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.main{
+    flex: 1 0 auto;
+    background-color:white;
+}
+
+footer.page-footer {
+    /* background-color: #FA5858;*/
+    background-color: #34859C;
+}
+
+
+
+
+/* //sticky footer*/
+
+/*navigation*/
+nav{
+    /*background-color:#FA5858;*/
+    background-color:white;
+}
+nav a{
+    color:#34859C;
+    padding-left: 5px;
+}
+
+nav .brand-logo{
+    color:#34859C;
+
+}
+
+nav ul a:hover {
+    background-color:transparent;
+}
+
+
+/*
+.nav-wrapper{
+  background-color:#FA5858;
+}*/
+nav.nav-extended {
+    height: auto;
+}
+nav.nav-extended .nav-wrapper {
+    height: auto;
+}
+
+html{
+    font-family: Roboto, GillSans, Calibri, Trebuchet, sans-serif;
+}
+
+
+.center .container {
+    width: 90%;
+}
+
+.center.container .row {
+    margin-left:0;
+    margin-right: 0;
+}
+
+
+
+
+
+/*container*/
+@media only screen and (min-width: 601px) and (max-width: 992px){
+    .center.container {
+        width: 90%;
+    }
+    .index_center.container{
+        width: 80%;
+    }
+}
+
+@media only screen and (min-width: 993px) {
+    .center.container {
+        width: 90%;
+    }
+    .index_center.container{
+        width: 60%;
+    }
+
+}
+
+@media only screen and (max-width: 425px) {
+    .center.container {
+        width: 90%;
+    }
+
+    .index_center.container{
+        width: 90%;
+    }
+
+}
+
+
+@media only screen and (min-width: 426px) and (max-width: 600px) {
+    .center.container {
+        width: 80%;
+    }
+    .index_center.container{
+        width: 70%;
+    }
+
+}
+
+
+/*dribbble hover effect*/
+.portfolio-item {
+
+    float:left;
+    position:relative;
+    width:100%;
+    height:100%;
+}
+
+.content {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:white;
+    opacity:0;
+    -webkit-transition: opacity 1s;
+    transition: opacity 1s;
+}
+.content:hover {
+    opacity:0.9;
+    z-index: 104;
+}
+
+
+
+
+
+
+/*crop image*/
+.crop_image{
+
+    background-size:cover;
+    background-position:50% 50%;
+    background-repeat: no-repeat; background-origin: content-box;
+}
+
+.main_blue {
+    background-color: #34859C !important;
+}
+
+.main_red {
+    background-color: #FA5858!important;
+}
+
+
+
+
+/*date picker*/
+
+.picker__date-display{
+    background-color: #34859C!important;
+}
+
+.picker__weekday-display {
+    background-color: #30798E!important;
+}
+
+
+
+.picker__day.picker__day--today {
+    color: black;
+    font-weight:600;
+}
+
+
+.picker__nav--prev:hover,
+.picker__nav--next:hover {
+    background: #A5C8D3;
+}
+
+
+.picker__day--selected,
+.picker__day--selected:hover,
+.picker--focused .picker__day--selected {
+
+    background-color: #34859C;
+
+}
+
+
+.picker__close, .picker__today {
+    color: #30798E;
+}
+
+
+/*  CIMRI  */
+/*input field color - cimri*/
+#sekcija_cimri input:not([type]):focus:not([readonly]),
+#sekcija_cimri input[type=text]:focus:not([readonly]),
+#sekcija_cimri input[type=password]:focus:not([readonly]),
+#sekcija_cimri input[type=email]:focus:not([readonly]),
+#sekcija_cimri input[type=url]:focus:not([readonly]),
+#sekcija_cimri input[type=time]:focus:not([readonly]),
+#sekcija_cimri input[type=date]:focus:not([readonly]),
+#sekcija_cimri input[type=datetime]:focus:not([readonly]),
+#sekcija_cimri input[type=datetime-local]:focus:not([readonly]),
+#sekcija_cimri input[type=tel]:focus:not([readonly]),
+#sekcija_cimri input[type=number]:focus:not([readonly]),
+#sekcija_cimri input[type=search]:focus:not([readonly]),
+#sekcija_cimri textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid  #34859C;
+    box-shadow: 0 1px 0 0  #34859C;
+}
+
+/*label color - CIMRI*/
+#sekcija_cimri input:not([type]):focus:not([readonly]) + label,
+#sekcija_cimri input[type=text]:focus:not([readonly]) + label,
+#sekcija_cimri input[type=password]:focus:not([readonly]) + label,
+#sekcija_cimri input[type=email]:focus:not([readonly]) + label,
+#sekcija_cimri input[type=url]:focus:not([readonly]) + label,
+#sekcija_cimri input[type=time]:focus:not([readonly]) + label,
+#sekcija_cimri input[type=date]:focus:not([readonly]) + label,
+#sekcija_cimri input[type=datetime]:focus:not([readonly]) + label,
+#sekcija_cimri input[type=datetime-local]:focus:not([readonly]) + label,
+#sekcija_cimri input[type=tel]:focus:not([readonly]) + label,
+#sekcija_cimri input[type=number]:focus:not([readonly]) + label,
+#sekcija_cimri input[type=search]:focus:not([readonly]) + label,
+#sekcija_cimri textarea.materialize-textarea:focus:not([readonly]) + label {
+    color:#34859C;
+}
+
+/*prexix ikona textfield - CIMRI */
+#sekcija_cimri .input-field .prefix.active {
+    color: #34859C;
+}
+/*prexix ikona textfield - STANOVANJA*/
+
+/*ikone - STANOVANJA*/
+#sekcija_cimri .material-icons{
+    color: #34859C;
+}
+
+
+
+
+
+/*  STANOVANJA  */
+/*input field color - STANOVANJA*/
+#sekcija_stanovanja input:not([type]):focus:not([readonly]),
+#sekcija_stanovanja input[type=text]:focus:not([readonly]),
+#sekcija_stanovanja input[type=password]:focus:not([readonly]),
+#sekcija_stanovanja input[type=email]:focus:not([readonly]),
+#sekcija_stanovanja input[type=url]:focus:not([readonly]),
+#sekcija_stanovanja input[type=time]:focus:not([readonly]),
+#sekcija_stanovanja input[type=date]:focus:not([readonly]),
+#sekcija_stanovanja input[type=datetime]:focus:not([readonly]),
+#sekcija_stanovanja input[type=datetime-local]:focus:not([readonly]),
+#sekcija_stanovanja input[type=tel]:focus:not([readonly]),
+#sekcija_stanovanja input[type=number]:focus:not([readonly]),
+#sekcija_stanovanja input[type=search]:focus:not([readonly]),
+#sekcija_stanovanja textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid  #FDC2C2;
+    box-shadow: 0 1px 0 0  #FDC2C2;
+}
+
+/*label color - STANOVANJA*/
+#sekcija_stanovanja input:not([type]):focus:not([readonly]) + label,
+#sekcija_stanovanja input[type=text]:focus:not([readonly]) + label,
+#sekcija_stanovanja input[type=password]:focus:not([readonly]) + label,
+#sekcija_stanovanja input[type=email]:focus:not([readonly]) + label,
+#sekcija_stanovanja input[type=url]:focus:not([readonly]) + label,
+#sekcija_stanovanja input[type=time]:focus:not([readonly]) + label,
+#sekcija_stanovanja input[type=date]:focus:not([readonly]) + label,
+#sekcija_stanovanja input[type=datetime]:focus:not([readonly]) + label,
+#sekcija_stanovanja input[type=datetime-local]:focus:not([readonly]) + label,
+#sekcija_stanovanja input[type=tel]:focus:not([readonly]) + label,
+#sekcija_stanovanja input[type=number]:focus:not([readonly]) + label,
+#sekcija_stanovanja input[type=search]:focus:not([readonly]) + label,
+#sekcija_stanovanja textarea.materialize-textarea:focus:not([readonly]) + label {
+    color:#FB9494;
+}
+
+/*prexix ikona textfield - STANOVANJA*/
+#sekcija_stanovanja .input-field .prefix.active {
+    color: #FB9494;
+}
+/*ikone - STANOVANJA*/
+#sekcija_stanovanja .material-icons{
+    color: #FB9494;
+}
+
+/*scrollbar*/
+
+/*radio buttons*/
+
+
+[type="radio"]:checked + label:after,
+[type="radio"].with-gap:checked + label:before,
+[type="radio"].with-gap:checked + label:after {
+    border: 2px solid #34859C;
+}
+
+[type="radio"]:checked + label:after,
+[type="radio"].with-gap:checked + label:after {
+    background-color: #34859C;
+}
+
+/*switch*/
+.switch label input[type=checkbox]:checked + .lever:after {
+    background-color:#FA5858;
+}
+.switch label input[type=checkbox]:checked + .lever {
+    background-color: #FA5858;
+}
+
+
+/*check-box*/
+
+[type="checkbox"]:checked + label:before {
+
+    border-right: 2px solid #34859C;
+    border-bottom: 2px solid #34859C;
+
+}
+
+[type="checkbox"]:indeterminate + label:before {
+    border-right: 2px solid #34859C;
+}
+
+
+[type="checkbox"].filled-in:checked + label:after {
+    border: 2px solid  #34859C;
+    background-color:  #34859C;
+}
+
+[type="checkbox"].filled-in.tabbed:checked:focus + label:after {
+    background-color:  #34859C;
+    border-color:  #34859C;
+}
+
+/*range slider*/
+input[type=range] + .thumb {
+    background-color:  #34859C;
+}
+
+input[type=range] + .thumb .value {
+    color:  #34859C;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    background-color: #34859C;
+}
+
+
+input[type=range]::-moz-range-thumb {
+    background: #34859C;
+}
+
+
+input[type=range]::-ms-thumb {
+    background: #34859C;
+}
+
+/* scrollable tabs */
+
+
+
+.tabs {
+    background-color: transparent;
+
+}
+
+
+.tabs .tab a {
+    color: #30798E;
+    text-transform:none;
+}
+
+.tabs .tab a:hover {
+    color: #A5C8D3;
+}
+
+.tabs .tab.disabled a {
+    color: #A5C8D3;
+}
+
+.tabs .indicator {
+    background-color: #34859C;
+}
+
+/*select dropdown*/
+.dropdown-content li > a, .dropdown-content li > span {
+    /*font-size: 16px;*/
+    color: #FA5858;
+}
+/*
+[type="checkbox"]:checked + label:before {
+
+  border-right: 2px solid #34859C;
+  border-bottom: 2px solid #34859C;
+
+}
+
+*/
+
+/*index page autocomplete  dropdown*/
+
+
+
+.autocomplete-content.dropdown-content {
+    position:absolute;
+    z-index:5;
+    width:inherit;
+    position: relative;
+    /*margin: 0.5rem 0 1rem 0;*/
+    background-color: #fff;
+    transition: box-shadow .25s;
+    border-radius: 2px;
+}
+
+
+
+
+/*card hover up*/
+#card_hover:hover {
+    top: -5px;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+#card_hover {
+    position: relative;
+    top: 0;
+    transition: top ease 0.6s;
+}
+#text_hover:hover{
+    top: -5px;
+}
+#text_hover {
+    position: relative;
+    top: 0;
+    transition: top ease 0.6s;
+}
+#search_hover:hover {
+    top: -5px;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+#search_hover {
+    position: relative;
+    top: 0;
+    transition: top ease 0.6s;
+}
+/*
+effect: zatrese hisko or sth...
+
+#welcome_text:hover{
+     -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+  -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+  transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+}
+#welcome_text{
+ transition-duration: 2.0s;
+}
+*/
+
+
+/*HEART*/
+
+/* ANIMACIÃ“N CORAZON */
+
+.heart {
+    width: 50px;
+    height: 50px;
+    background: url("../images/heart.png") no-repeat;
+    background-position: 0 0;
+    cursor: pointer;
+    animation: fave-heart 1s steps(28);
+    /*display: -webkit-inline-box;*/
+    margin-bottom: -20px;
+}
+.heart:hover {
+    background-position: -1400px 0;
+    transition: background 1s steps(28);
+}
+@keyframes fave-heart {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: -1400px 0;
+    }
+}
+
+/* ANIMACIÃ“N SHAKE 404 */
+
+@-webkit-keyframes spaceboots {
+    0% { -webkit-transform: translate(2px, 1px) rotate(0deg); }
+    10% { -webkit-transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { -webkit-transform: translate(-3px, 0px) rotate(1deg); }
+    30% { -webkit-transform: translate(0px, 2px) rotate(0deg); }
+    40% { -webkit-transform: translate(1px, -1px) rotate(1deg); }
+    50% { -webkit-transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { -webkit-transform: translate(-3px, 1px) rotate(0deg); }
+    70% { -webkit-transform: translate(2px, 1px) rotate(-1deg); }
+    80% { -webkit-transform: translate(-1px, -1px) rotate(1deg); }
+    90% { -webkit-transform: translate(2px, 2px) rotate(0deg); }
+    100% { -webkit-transform: translate(1px, -2px) rotate(-1deg); }
+}
+.shake:hover,
+.shake:focus {
+    -webkit-animation-name: spaceboots;
+    -webkit-animation-duration: 0.5s;
+    -webkit-transform-origin:50% 50%;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+}
+.shake {
+    -webkit-animation-name: spaceboots;
+    -webkit-animation-duration: 0.5s;
+    -webkit-transform-origin:50% 50%;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease-in-out;
+}
+
+/*card action buttons*/
+ul.card-action-buttons li{display:inline-block;padding-left:5px}
+card-action-buttons{margin:-26px 10px 0 0;text-align:right}
+ul.card-action-buttons{margin:-26px 10px 0 0;text-align:right}
+
+
+
+
+
+
+
+
+
+
+
