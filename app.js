@@ -64,10 +64,10 @@ io.on('connection', function (socket) {
     socket.on('close', function () {
         console.log("conn closed");
     });
-    socket.on('addSocketToCanvas', function (canvasId) {
+    socket.on('addSocketToCanvas', function (boardId) {
         console.log("addSocketToCanvas");
-        database.addSocketToCanvas(canvasId, socket.id)
-        database.getCanvas(canvasId, function (data) {
+        database.addSocketToCanvas(boardId, socket.id)
+        database.getCanvas(boardId, function (data) {
             console.log('init canvas data');
             //data[0].canvasData.startIndex = 0
             if(data.length > 0){
@@ -77,23 +77,23 @@ io.on('connection', function (socket) {
         });
     });
 
-    socket.on('uploadPicture', function (canvasId, data) {
-        database.addPictureToCanvas(canvasId, data);
-    });
+    // socket.on('uploadPicture', function (boardId, data) {
+    //     database.addPictureToCanvas(boardId, data);
+    // });
+    //
+    // socket.on('getPicture', function (boardId) {
+    //     database.getPicturesByBoardId(boardId, function(rows){
+    //         if(rows.length == 0) return;
+    //         var pictureData = rows[0].pictureData;
+    //         socket.emit('receivePicture', pictureData);
+    //     });
+    // });
 
-    socket.on('getPicture', function (canvasId) {
-        database.getPicturesByCanvasId(canvasId, function(rows){
-            if(rows.length == 0) return;
-            var pictureData = rows[0].pictureData;
-            socket.emit('receivePicture', pictureData);
-        });
-    });
-
-    socket.on('syncCanvas', function (canvasId, data) {
+    socket.on('syncCanvas', function (boardId, data) {
         console.log("syncin canvas");
-        database.updateCanvas(canvasId, data, function (rows) {
+        database.updateCanvas(boardId, data, function (rows) {
             console.log(rows);
-            database.getClientsByCanvasId(canvasId, function (canvasClients) {
+            database.getClientsByBoardId(boardId, function (canvasClients) {
                 // database.getCanvas(canvasId, function (data) {
                     clients.forEach(function (client) {
                         canvasClients.forEach(function (curr) {

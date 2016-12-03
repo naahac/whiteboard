@@ -7,12 +7,12 @@ var database = require('../database/database');
 database.connect();
 
 router.get('/*', function(req, res, next) {
-    var boardId = req.params[0];
-    var canvasId = req.query.canvasId;
+    var boardId = req.query.boardId;
+    //var canvasId = req.query.canvasId;
     //database.insertBoard(boardId);
-    //database.addCanvasToBoard(boardId, 'tests');
-
-    res.render('canvas', { title: 'Canvas', random: 'Random data' });
+    database.addCanvasToBoard(boardId, '', function (rows) {
+        res.render('canvas', { title: 'Canvas', random: 'Random data' });
+    });
 });
 
 module.exports = router;

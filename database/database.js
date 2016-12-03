@@ -3,14 +3,25 @@
  */
 var mysql = require("mysql");
 var con;
-function getCanvas (canvasId, callback) {
-    con.query('SELECT * from canvas where idCanvas = ?', [canvasId], function (err, rows) {
+function getCanvas (idBoard, callback) {
+    con.query('SELECT * from canvas where idBoard = ?', [idBoard], function (err, rows) {
         if (err){
             console.log(err);
             return;}
         console.log('Data received from Db(get canvas):\n');
         console.log(rows);
         callback(rows);
+    });
+}
+
+function getCanvasByBoardId (boardId, callback) {
+    con.query('SELECT * from canvas where idBoard = ?', [boardId], function (err, rows) {
+        if (err){
+            console.log(err);
+            return;}
+        console.log('Data received from Db(get canvas):\n');
+        console.log(rows);
+        callback(rows[0].idCanvas);
     });
 }
 module.exports = {
@@ -49,18 +60,18 @@ module.exports = {
             return rows
         });
     },
-    addCanvasToBoard: function (boardId, data) {
-        con.query('INSERT INTO canvas (idBoard, canvasData) VALUES (?, ?)', [boardId, data], function (err, rows) {
-            if (err){
-                console.log(err);
-                return;}
-            console.log('Data received from Db(insert into canvas):\n');
-            console.log(rows);
-            return rows
-        });
+    addCanvasToBoard: function (boardId, data, callback) {
+            con.query('INSERT IGNORE INTO canvas (idBoard, canvasData) VALUES (?, ?)', [boardId, data], function (err, rows) {
+                if (err){
+                    console.log(err);
+                    return;}
+                console.log('Data received from Db(insert into canvas):\n');
+                console.log(rows);
+                callback(rows);
+            });
     },
-    getCanvas: function getCanvas (canvasId, callback) {
-        con.query('SELECT * from canvas where idCanvas = ?', [canvasId], function (err, rows) {
+    getCanvas: function getCanvas (boardId, callback) {
+        con.query('SELECT * from canvas where idBoard = ?', [boardId], function (err, rows) {
             if (err){
                 console.log(err);
                 return;}
@@ -69,11 +80,16 @@ module.exports = {
             callback(rows);
         });
     },
-    updateCanvas: function (canvasId,data, callback) {
-        getCanvas(canvasId, function (rows) {
-            var origData = JSON.parse(rows[0].canvasData);
-            origData.points = origData.points.concat(data.points);
-            con.query('UPDATE canvas set canvasData = ? where idCanvas = ?', [JSON.stringify(origData), canvasId], function (err, rows) {
+    updateCanvas: function (boardId,data, callback) {
+        getCanvas(boardId, function (rows) {
+            var origData;
+            if(rows.length > 0 && rows[0].canvasData != '' ){
+                origData = JSON.parse(rows[0].canvasData);
+                origData.points = origData.points.concat(data.points);
+            }
+            else
+                origData = data;
+            con.query('UPDATE canvas set canvasData = ? where idBoard = ?', [JSON.stringify(origData), boardId], function (err, rows) {
                 if (err){
                     console.log(err);
                     return;}
@@ -83,14 +99,17 @@ module.exports = {
             });
         });
     },
-    addSocketToCanvas: function (canvasId, socketId) {
-        con.query('INSERT IGNORE INTO canvasClient (idCanvas, clientId) VALUES (?, ?)', [canvasId, socketId, canvasId], function (err, rows) {
-            if (err){
-                console.log(err);
-                return;}
-            console.log('Data received from Db(insert into canvas clients):\n');
-            console.log(rows);
-            return rows
+    addSocketToCanvas: function (boardId, socketId) {
+        getCanvasByBoardId(boardId, function (canvasId) {
+            con.query('INSERT IGNORE INTO canvasClient (idCanvas, clientId) VALUES (?, ?)', [canvasId, socketId], function (err, rows) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                console.log('Data received from Db(insert into canvas clients):\n');
+                console.log(rows);
+                return rows
+            });
         });
     },
     addPictureToCanvas: function (canvasId, data) {
@@ -123,15 +142,17 @@ module.exports = {
             return rows
         });
     },
-    getClientsByCanvasId: function (canvasId, callback) {
-        con.query('SELECT clientId from canvasClient where idCanvas = ?', [canvasId], function (err, rows) {
-            if (err){
-                console.log(err);
-                return;
-            }
-            console.log('Data received from Db(get canvas clients):\n');
-            console.log(rows);
-            callback(rows);
+    getClientsByBoardId: function (boardId, callback) {
+        getCanvasByBoardId(boardId, function (canvasId) {
+            con.query('SELECT clientId from canvasClient where idCanvas = ?', [canvasId], function (err, rows) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                console.log('Data received from Db(get canvas clients):\n');
+                console.log(rows);
+                callback(rows);
+            });
         });
     }
 }
