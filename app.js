@@ -15,9 +15,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var canvas = require('./routes/canvas');
 var database = require('./database/database');
-// var socket = require('./socket');
 var team = require('./routes/team');
-//var socket = require('./socket.js');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

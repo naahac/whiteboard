@@ -7,10 +7,16 @@
     <link rel="/javascripts/widget.html"></link>
 </head>
 <body style="height: 100%">
+<button onclick="Export">Export</button>
 <div id="widget-container" style="height: 100%"></div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/javascripts/canvas-designer-widget.js"></script>
 <script>
+    function Export(){
+        designer.toDataURL('image/png', function(dataURL) {
+            window.open(dataURL);
+        });
+    }
     function getParameterByName(name, url) {
         if (!url) {
             url = window.location.href;
