@@ -93,6 +93,26 @@ module.exports = {
             return rows
         });
     },
+    addPictureToCanvas: function (canvasId, data) {
+        con.query('INSERT INTO pictures (pictureData, canvasId) VALUES (?, ?)', [data,canvasId], function (err, rows) {
+            if (err){
+                console.log(err);
+                return;}
+            console.log('Data received from Db(insert into pictures):\n');
+            console.log(rows);
+            return rows
+        });
+    },
+    getPicturesByCanvasId: function (canvasId, callback) {
+        con.query('select pictureData from pictures where canvasId = ?', [canvasId], function (err, rows) {
+            if (err){
+                console.log(err);
+                return;}
+            console.log('Data received from Db(select pictures):\n');
+            console.log(rows);
+            callback(rows);
+        });
+    },
     removeSocket: function (socketId) {
         con.query('DELETE FROM canvasClient WHERE clientId = ?', [socketId], function (err, rows) {
             if (err){

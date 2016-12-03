@@ -12,10 +12,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var team = require('./routes/team');
 var index = require('./routes/index');
 var canvas = require('./routes/canvas');
 var database = require('./database/database');
-var team = require('./routes/team');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -72,6 +72,18 @@ io.on('connection', function (socket) {
                 console.log(data[0].canvasData);
                 socket.emit('syncCanvas', data[0].canvasData);
             }
+        });
+    });
+
+    socket.on('uploadPicture', function (canvasId, data) {
+        database.addPictureToCanvas(canvasId, data);
+    });
+
+    socket.on('getPicture', function (canvasId) {
+        database.getPicturesByCanvasId(canvasId, function(rows){
+            if(rows.length == 0) return;
+            var pictureData = rows[0].pictureData;
+            socket.emit('receivePicture', pictureData);
         });
     });
 

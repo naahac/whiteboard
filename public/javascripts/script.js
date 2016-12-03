@@ -15,6 +15,8 @@ var onAuthorize;
 onAuthorize = function () {
     updateLoggedIn();
     $("#output").empty();
+    var token = Trello.token();
+    window.location.replace("/team?token=" + token);
 
     Trello.members.get("me", function (member) {
         $("#fullName").text(member.fullName);

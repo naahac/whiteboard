@@ -12,7 +12,7 @@ router.get('/*', function(req, res, next) {
     //database.insertBoard(boardId);
     //database.addCanvasToBoard(boardId, 'tests');
 
-    res.render('canvas', { title: 'Canvas' });
+    res.render('canvas', { title: 'Canvas', random: 'Random data' });
 });
 
 module.exports = router;
