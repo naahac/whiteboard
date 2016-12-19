@@ -30,7 +30,7 @@ module.exports = {
         con = mysql.createConnection({
             multipleStatements: true,
             database: "hackathon_baza",
-            host: "193.2.176.95",
+            host: "164.8.212.153",
             user: "admin",
             password: "admin"
         });

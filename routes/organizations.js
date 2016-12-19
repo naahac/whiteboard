@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
         t.get("/1/members/me", function(err, me) {
             if (err) console.log(err);
             console.log(me);
-            res.render('organizations', { title: 'Express', username : me.username,teams : data});
+            res.render('organizations', { title: 'Express', username : me.fullName,teams : data});
         });
     });
 });
